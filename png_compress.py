@@ -29,11 +29,17 @@ def compress(directory, level, subs=0, files=0):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("directory", help="the top directory containing images")
-    parser.add_argument("-l", "--level", type=int, default=9, help="the level of compression desired from 1 to 9 (default)")
+    parser.add_argument("path", help="the path to a directory containing images")
+    parser.add_argument("-l", "--level", type=int, default=9, help="the level of compression desired from 1 to 9 (default of 9)")
     args = parser.parse_args()
 
-    total = compress(args.directory, args.level)
+    if(args.level < 1 or args.level > 9):
+        print("Error: invalid compression level")
+        return
+
+    print("Starting compression...")
+    
+    total = compress(args.path, args.level)
 
     if(total != (-1,-1)):
         print("\nFinished compression.")
