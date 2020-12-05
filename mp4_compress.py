@@ -1,8 +1,7 @@
-from converter import Converter
+import ffmpeg
 import os
 
 files = os.listdir()
-c = Converter()
 
 if not os.path.exists("new"):
     os.makedirs("new")
@@ -10,5 +9,7 @@ if not os.path.exists("new"):
 for f in files:
     if f.lower().endswith(".mp4"):
         print("Converting " + f)
-        c.convert(f, "new/" + f, {'format': 'mp4','video': {'codec': 'hevc'}})
+        stream = ffmpeg.input(f)
+        stream = ffmpeg.output(stream, "new/" + f, vcodec="hevc")
+        ffmpeg.run(stream)
         print("Converted " + f)
